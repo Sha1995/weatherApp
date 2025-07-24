@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import WeatherCard from "./weatherCard";
 
 const Weather = () => {
   const [coords, setCoords] = useState({ lat: null, lon: null });
@@ -30,6 +31,9 @@ const Weather = () => {
       //async mainly used to handle asynchronous operation, such as fetching data from an api call
       const fetchWeather = async () => {
         try {
+          /This sends an HTTP GET request to WeatherAPI.com
+          //fetch() is an inbuilt function for making HTTP request
+          //await pauses the function until the API response comes back.
           const response = await fetch(
             `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${coords.lat},${coords.lon}`
           );
@@ -43,29 +47,37 @@ const Weather = () => {
     }
   }, [coords]);
 
+  // return (
+  //   <div style={{ padding: "20px", fontFamily: "Arial" }}>
+  //     <h2>Live Weather Info</h2>
+  //     {error && <p style={{ color: "red" }}>{error}</p>}
+  //     {!weather && !error && <p>Loading location and weather...</p>}
+  //     {weather && (
+  //       <div>
+  //         <p>
+  //           <strong>Location:</strong> {weather.location.name},{" "}
+  //           {weather.location.region}, {weather.location.country}
+  //         </p>
+  //         <p>
+  //           <strong>Temperature:</strong> {weather.current.temp_c}°C
+  //         </p>
+  //         <p>
+  //           <strong>Condition:</strong> {weather.current.condition.text}
+  //         </p>
+  //         <img
+  //           src={weather.current.condition.icon}
+  //           alt={weather.current.condition.text}
+  //         />
+  //       </div>
+  //     )}
+  //   </div>
+  // );
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial" }}>
-      <h2>Live Weather Info</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!weather && !error && <p>Loading location and weather...</p>}
-      {weather && (
-        <div>
-          <p>
-            <strong>Location:</strong> {weather.location.name},{" "}
-            {weather.location.region}, {weather.location.country}
-          </p>
-          <p>
-            <strong>Temperature:</strong> {weather.current.temp_c}°C
-          </p>
-          <p>
-            <strong>Condition:</strong> {weather.current.condition.text}
-          </p>
-          <img
-            src={weather.current.condition.icon}
-            alt={weather.current.condition.text}
-          />
-        </div>
-      )}
+    <div className="app">
+      <h1>🌤 Live Weather App</h1>
+      {error && <p className="error">{error}</p>}
+      {!weather && !error && <p className="loading">Loading weather...</p>}
+      {weather && <WeatherCard weather={weather} />}
     </div>
   );
 };
