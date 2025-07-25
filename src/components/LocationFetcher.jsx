@@ -6,7 +6,7 @@ const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
 
-  const apiKey = "**"; // Replace with your actual WeatherAPI key
+  const apiKey = process.env.REACT_APP_API_KEY; // Replace with your actual WeatherAPI key
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -31,7 +31,7 @@ const Weather = () => {
       //async mainly used to handle asynchronous operation, such as fetching data from an api call
       const fetchWeather = async () => {
         try {
-          /This sends an HTTP GET request to WeatherAPI.com
+          //This sends an HTTP GET request to WeatherAPI.com
           //fetch() is an inbuilt function for making HTTP request
           //await pauses the function until the API response comes back.
           const response = await fetch(
